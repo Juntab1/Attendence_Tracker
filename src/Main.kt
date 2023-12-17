@@ -26,6 +26,7 @@ fun intro(){
     val currPerson = Person(firstName, lastName, age)
 
     // add the person to a global mutablelist variable for later use of multiple people
+    // maybe create another class that keeps track of multiple Person instances, class called "Community"
 }
 
 // A note keeping app focused on keeping track of people information
