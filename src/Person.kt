@@ -6,12 +6,16 @@ class Person(private val nameFirst : String?, private val nameLast : String?, pr
     // lateinit under the hood gives the variables a null later to be initialized
     private lateinit var activity : MutableList<String>
     // the key is the index num. of activity in activity and value is comment
-    private lateinit var comments : Map<Int, String>
+    private lateinit var comments : MutableMap<String, String>
 
-    fun add_activity(activityName : String) {
+    fun add_activity(activityName : String, comment : String?) {
         // able to add activity name
         activity.add(activityName)
         // able to add comment about that activity
+        if (comment != null){
+            comments[activityName] = comment
+        }
+
     }
 
     fun remove_activity() {
