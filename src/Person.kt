@@ -24,8 +24,11 @@ class Person(private val nameFirst : String?, private val nameLast : String?, pr
         comments.remove(activityName)
     }
 
-    fun read_comment() {
-        // access the map to get the comment
+
+    // access the map to get the comment
+    fun read_comment(activityName: String): String? {
+
+        if (comments.containsKey(activityName)) (return comments[activityName]) else (return "does not exist")
     }
 
 
