@@ -1,11 +1,30 @@
+import java.util.Scanner
+
 fun main() {
-    println("What is your name?")
+    intro()
 
 }
 
+// create the current user
 fun intro(){
-    // ask the user input questions
+    print("What is your first name? ")
+    val firstName = readln()
+
+    print("What is your last name Initial? ")
+    var lastName = readln()
+
+    while (lastName.length > 1){
+        print("What is your last name Initial? ")
+        lastName = readln()
+    }
+
+    val reader = Scanner(System.`in`)
+    print("What is your age? ")
+    val age = reader.nextInt()
+
     // create the person instance
+    val currPerson = Person(firstName, lastName, age)
+
     // add the person to a global mutablelist variable for later use of multiple people
 }
 
