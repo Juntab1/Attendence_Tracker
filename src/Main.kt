@@ -1,5 +1,12 @@
 fun main() {
-    println("Hello World!")
+    println("What is your name?")
+
+}
+
+fun intro(){
+    // ask the user input questions
+    // create the person instance
+    // add the person to a global mutablelist variable for later use of multiple people
 }
 
 // A note keeping app focused on keeping track of people information
