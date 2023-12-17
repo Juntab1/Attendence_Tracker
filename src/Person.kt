@@ -8,18 +8,20 @@ class Person(private val nameFirst : String?, private val nameLast : String?, pr
     // the key is the index num. of activity in activity and value is comment
     private lateinit var comments : MutableMap<String, String>
 
+
+    // able to add activity name and comment about that activity
     fun add_activity(activityName : String, comment : String?) {
-        // able to add activity name
         activity.add(activityName)
-        // able to add comment about that activity
         if (comment != null){
             comments[activityName] = comment
         }
 
     }
 
-    fun remove_activity() {
-        // remove the activity and comments connected to it
+    // remove the activity and comments connected to it
+    fun remove_activity(activityName: String) {
+        activity.remove(activityName)
+        comments.remove(activityName)
     }
 
     fun read_comment() {
