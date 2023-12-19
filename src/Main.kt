@@ -1,12 +1,16 @@
 import java.util.Scanner
 
 fun main() {
-    intro()
+    // instance of community class
+    val community = Community()
+
+    intro(community)
 
 }
 
 // create the current user
-fun intro(){
+fun intro(community: Community){
+
     print("What is your first name? ")
     val firstName = readln()
 
@@ -25,8 +29,9 @@ fun intro(){
     // create the person instance
     val currPerson = Person(firstName, lastName, age)
 
-    // add the person to a global mutablelist variable for later use of multiple people
-    // maybe create another class that keeps track of multiple Person instances, class called "Community"
+    // add the person to community instance
+    community.add(currPerson)
+    println(community.to_string())
 }
 
 // A note keeping app focused on keeping track of people information
