@@ -21,6 +21,7 @@ class Community {
         nameList.forEach(){
             names += "${it.first_last_name()},"
         }
+        names = names.removeRange(names.length - 1, names.length)
         return names
     }
 }
