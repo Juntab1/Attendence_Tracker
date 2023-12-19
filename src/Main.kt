@@ -1,4 +1,5 @@
 import java.util.Scanner
+import java.util.concurrent.TimeUnit
 
 fun main() {
     // instance of community class
@@ -10,6 +11,9 @@ fun main() {
 
 // create the current user
 fun intro(community: Community){
+    println("Welcome to Attendence Tracker! You will be able to " +
+            "track information about people like a note book!")
+    // maybe add a sleep function here
 
     print("What is your first name? ")
     val firstName = readln()
@@ -33,6 +37,42 @@ fun intro(community: Community){
     community.add(currPerson)
     println(community.to_string())
 }
+
+fun options(community: Community) {
+    // the person we want to access
+    val tempName = choose_user(community)
+
+    // put questions into a function for easier reading
+    println("What would you like to do for ${tempName.first_last_name()}?")
+    println("(A) Would you like to add an activity?")
+    println("(B) Would you like to add a comment for an activity?")
+    println("(C) Would you like to remove an activity?")
+    var userChoice = readln()
+
+    while (userChoice != "Q"){
+        // choices for user
+    }
+
+
+}
+
+// choose the person the user would like to add the notes to
+fun choose_user(community: Community) : Person {
+    val reader = Scanner(System.`in`)
+    val currNames = community.get()
+    if (currNames.size == 1){
+        return currNames[0]
+    }
+    var nameNumber = 1
+    while (nameNumber < 1 || nameNumber > currNames.size){
+        println("Which person would you like to access?")
+        println("1 - ${currNames.size}")
+        nameNumber = reader.nextInt()
+    }
+    return currNames[nameNumber - 1]
+}
+
+
 
 // A note keeping app focused on keeping track of people information
 //      features:
