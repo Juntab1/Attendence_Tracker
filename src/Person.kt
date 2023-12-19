@@ -9,8 +9,13 @@ class Person(private val nameFirst : String?, private val nameLast : String?, pr
     private lateinit var comments : MutableMap<String, String>
 
     fun intro_display(): String {
-        return "Hello ${firstName} ${lastInitial}!"
+        return "Hello $firstName ${lastInitial}!"
     }
+
+    fun first_last_name() : String {
+        return "$nameFirst $nameLast"
+    }
+
 
     fun display_info(): String {
         // way of returning the usual display for the user

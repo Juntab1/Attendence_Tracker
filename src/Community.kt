@@ -19,7 +19,7 @@ class Community {
     fun to_string() : String {
         var names : String = "Names: "
         nameList.forEach(){
-            names += "$it,"
+            names += "${it.first_last_name()},"
         }
         return names
     }
