@@ -26,6 +26,10 @@ class Person(private val nameFirst : String?, private val nameLast : String?, pr
 
     // able to add activity name and comment about that activity
     fun add_activity() {
+        if (!::activity.isInitialized && !::comments.isInitialized){
+            activity = mutableListOf<String>()
+            comments = mutableMapOf<String, String>()
+        }
         print("What is the activity name? ")
         val actName = readln()
         activity.add(actName)
@@ -36,16 +40,27 @@ class Person(private val nameFirst : String?, private val nameLast : String?, pr
 
     // remove the activity and comments connected to it
     fun remove_activity() {
-        val actName = find_activity_name()
-        activity.remove(actName)
-        comments.remove(actName)
+        if (::activity.isInitialized){
+            val actName = find_activity_name()
+            activity.remove(actName)
+            comments.remove(actName)
+        }
+        else{
+            println("No activities Available!")
+        }
     }
 
 
     // access the map to get the comment
     fun read_comment(): String? {
-        val actName = find_activity_name()
-        return comments[actName]
+        if (::comments.isInitialized){
+            val actName = find_activity_name()
+            return comments[actName]
+        }
+        else{
+            println("No activities available to read comments from!")
+        }
+        return null
     }
 
     fun find_activity_name(): String{
