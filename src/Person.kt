@@ -7,36 +7,18 @@ class Person(private val nameFirst : String?, private val nameLast : String?, pr
     private val age : Int? = null
     // lateinit under the hood gives the variables a null later to be initialized
     private lateinit var activities : MutableList<String>
-    // the key is the index num. of activity in activity and value is comment
+    // key =  index num. of activity in activity
+    // value = comment
     private lateinit var comments : MutableMap<String, String>
 
-    // maybe at some point can merge this function into another
-    public fun introDisplay(): String {
-        return "Hello $firstName ${lastInitial}!"
-    }
 
     public fun fullNameDisplay() : String {
         return "$nameFirst $nameLast"
     }
 
-
-    public fun displayInfo() {
-        // way of returning the usual display for the user
-        println("Activities:")
-        val iterate = activities.listIterator()
-        var numberOfAct = 1;
-        if (!iterate.hasNext()){
-            println("  No activities")
-        }
-        else{
-            while (iterate.hasNext()){
-                val currActivity = iterate.next()
-                println("  ${numberOfAct}. $currActivity")
-                numberOfAct++;
-            }
-        }
+    public fun getActivities(): MutableList<String> {
+        return activities
     }
-
 
     // able to add activity name and comment about that activity
     public fun addActivity() {

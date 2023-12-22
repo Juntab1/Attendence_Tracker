@@ -9,10 +9,9 @@ fun main() {
 }
 
 // create the current user
-fun initialIntro(community: Community){
-    println("Welcome to Attendence Tracker! You will be able to " +
+private fun initialIntro(community: Community){
+    println("Welcome to Attendance Tracker! You will be able to " +
             "track information about people like a note book!")
-    // maybe add a sleep function here
 
     print("What is your first name? ")
     val firstName = readln()
@@ -36,10 +35,10 @@ fun initialIntro(community: Community){
     community.add(currPerson)
 
     // give user options for what they can do
-    options(community, currPerson)
+    options(community)
 }
 
-fun intro(tempName: Person): String{
+private fun intro(tempName: Person): String{
     println("What would you like to do for ${tempName.fullNameDisplay()}?")
     println("(A) Would you like to add an activity?")
     println("(B) Would you like to read a comment for an activity?")
@@ -50,7 +49,40 @@ fun intro(tempName: Person): String{
     return userChoice
 }
 
-fun options(community: Community, currPerson: Person) {
+// choose the person the user would like to add the notes to
+private fun chooseUser(community: Community) : Person {
+    val reader = Scanner(System.`in`)
+    val currNames = community.get()
+    if (currNames.size == 1){
+        return currNames[0]
+    }
+    var nameNumber = 1
+    while (nameNumber < 1 || nameNumber > currNames.size){
+        println("Which person would you like to access? ")
+        println("1 - ${currNames.size}")
+        nameNumber = reader.nextInt()
+    }
+    return currNames[nameNumber - 1]
+}
+
+private fun displayInfo(currUser: Person) {
+    // way of returning the usual display for the user
+    println("Activities:")
+    val iterate = currUser.getActivities().listIterator()
+    var numberOfAct = 1;
+    if (!iterate.hasNext()){
+        println("  No activities")
+    }
+    else{
+        while (iterate.hasNext()){
+            val currActivity = iterate.next()
+            println("  ${numberOfAct}. $currActivity")
+            numberOfAct++;
+        }
+    }
+}
+
+private fun options(community: Community) {
     // the person we want to access
     val tempName = chooseUser(community)
 
@@ -69,29 +101,12 @@ fun options(community: Community, currPerson: Person) {
             tempName.removeActivity()
         }
 
-        currPerson.displayInfo()
+        displayInfo(tempName)
         // ask user again
         userChoice = intro(tempName)
     }
     println("Have a nice day!")
 }
-
-// choose the person the user would like to add the notes to
-fun chooseUser(community: Community) : Person {
-    val reader = Scanner(System.`in`)
-    val currNames = community.get()
-    if (currNames.size == 1){
-        return currNames[0]
-    }
-    var nameNumber = 1
-    while (nameNumber < 1 || nameNumber > currNames.size){
-        println("Which person would you like to access? ")
-        println("1 - ${currNames.size}")
-        nameNumber = reader.nextInt()
-    }
-    return currNames[nameNumber - 1]
-}
-
 
 
 // A note keeping app focused on keeping track of people information
@@ -106,6 +121,5 @@ fun chooseUser(community: Community) : Person {
 //      do formatting in main to start out with
 
 // Comments after creating single user interface:
-//      See if you can clean up any functions, some over laying classes possibly: in progress
 //      Need to have the option to change to another user, accessing using community class, Person class will not need to change
 //      Need to access activities based on date, this will change a great amount of the Person class and interface
