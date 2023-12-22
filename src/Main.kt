@@ -40,7 +40,7 @@ fun initialIntro(community: Community){
 }
 
 fun intro(tempName: Person): String{
-    println("What would you like to do for ${tempName.first_last_name()}?")
+    println("What would you like to do for ${tempName.fullNameDisplay()}?")
     println("(A) Would you like to add an activity?")
     println("(B) Would you like to read a comment for an activity?")
     println("(C) Would you like to remove an activity?")
@@ -60,16 +60,16 @@ fun options(community: Community, currPerson: Person) {
         userChoice = userChoice.replaceFirstChar { it.uppercaseChar() }
         // choices for user
         if (userChoice == "A"){
-            tempName.add_activity()
+            tempName.addActivity()
         }
         else if (userChoice == "B"){
-            tempName.read_comment()
+            tempName.readComment()
         }
         else if (userChoice == "C"){
-            tempName.remove_activity()
+            tempName.removeActivity()
         }
 
-        currPerson.display_info()
+        currPerson.displayInfo()
         // ask user again
         userChoice = intro(tempName)
     }

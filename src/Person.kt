@@ -10,16 +10,17 @@ class Person(private val nameFirst : String?, private val nameLast : String?, pr
     // the key is the index num. of activity in activity and value is comment
     private lateinit var comments : MutableMap<String, String>
 
-    fun intro_display(): String {
+    // maybe at some point can merge this function into another
+    fun introDisplay(): String {
         return "Hello $firstName ${lastInitial}!"
     }
 
-    fun first_last_name() : String {
+    fun fullNameDisplay() : String {
         return "$nameFirst $nameLast"
     }
 
 
-    fun display_info() {
+    fun displayInfo() {
         // way of returning the usual display for the user
         println("Activities:")
         val iterate = activities.listIterator()
@@ -37,9 +38,8 @@ class Person(private val nameFirst : String?, private val nameLast : String?, pr
     }
 
 
-
     // able to add activity name and comment about that activity
-    fun add_activity() {
+    fun addActivity() {
         if (!::activities.isInitialized && !::comments.isInitialized){
             activities = mutableListOf<String>()
             comments = mutableMapOf<String, String>()
@@ -53,9 +53,9 @@ class Person(private val nameFirst : String?, private val nameLast : String?, pr
     }
 
     // remove the activity and comments connected to it
-    fun remove_activity() {
+    fun removeActivity() {
         if (::activities.isInitialized){
-            val actName = find_activity_name().lowercase(Locale.getDefault())
+            val actName = findActivityName().lowercase(Locale.getDefault())
             activities.remove(actName)
             comments.remove(actName)
             println("$actName removed!")
@@ -67,10 +67,10 @@ class Person(private val nameFirst : String?, private val nameLast : String?, pr
 
 
     // access the map to get the comment
-    fun read_comment() {
+    fun readComment() {
         if (::comments.isInitialized){
             if (!comments.isEmpty()){
-                val actName = find_activity_name().lowercase(Locale.getDefault())
+                val actName = findActivityName().lowercase(Locale.getDefault())
                 println("Comment for ${actName}: " + comments[actName])
             }
             else{
@@ -82,7 +82,7 @@ class Person(private val nameFirst : String?, private val nameLast : String?, pr
         }
     }
 
-    fun find_activity_name(): String{
+    private fun findActivityName(): String{
         print("What is the name of the activity? ")
         var actName = readln().lowercase(Locale.getDefault())
         while (!activities.contains(actName)){
