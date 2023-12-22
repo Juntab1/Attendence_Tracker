@@ -121,5 +121,6 @@ private fun options(community: Community) {
 //      do formatting in main to start out with
 
 // Comments after creating single user interface:
+//      clean up the rest of the warning signs in the top right corner of the screen
 //      Need to have the option to change to another user, accessing using community class, Person class will not need to change
 //      Need to access activities based on date, this will change a great amount of the Person class and interface

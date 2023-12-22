@@ -1,27 +1,27 @@
 import java.util.*
 
-class Person(private val nameFirst : String?, private val nameLast : String?, private val userName : Int?) {
+class Person(nameFirst : String?, nameLast : String?, personAge : Int) {
     // maybe add a getter and setter later since it is all private
     private val firstName: String? = nameFirst
     private val lastInitial: String? = nameLast
-    private val age : Int? = null
-    // lateinit under the hood gives the variables a null later to be initialized
+    private val age : Int = personAge
+    // late-init under the hood gives the variables a null later to be initialized
     private lateinit var activities : MutableList<String>
     // key =  index num. of activity in activity
     // value = comment
     private lateinit var comments : MutableMap<String, String>
 
 
-    public fun fullNameDisplay() : String {
-        return "$nameFirst $nameLast"
+    fun fullNameDisplay() : String {
+        return "$firstName $lastInitial"
     }
 
-    public fun getActivities(): MutableList<String> {
+    fun getActivities(): MutableList<String> {
         return activities
     }
 
     // able to add activity name and comment about that activity
-    public fun addActivity() {
+    fun addActivity() {
         if (!::activities.isInitialized && !::comments.isInitialized){
             activities = mutableListOf<String>()
             comments = mutableMapOf<String, String>()
@@ -35,7 +35,7 @@ class Person(private val nameFirst : String?, private val nameLast : String?, pr
     }
 
     // remove the activity and comments connected to it
-    public fun removeActivity() {
+    fun removeActivity() {
         if (::activities.isInitialized){
             val actName = findActivityName().lowercase(Locale.getDefault())
             activities.remove(actName)
@@ -49,7 +49,7 @@ class Person(private val nameFirst : String?, private val nameLast : String?, pr
 
 
     // access the map to get the comment
-    public fun readComment() {
+    fun readComment() {
         if (::comments.isInitialized){
             if (comments.isNotEmpty()){
                 val actName = findActivityName().lowercase(Locale.getDefault())
