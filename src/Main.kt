@@ -73,8 +73,7 @@ fun options(community: Community, currPerson: Person) {
         // ask user again
         userChoice = intro(tempName)
     }
-
-
+    println("Have a nice day!")
 }
 
 // choose the person the user would like to add the notes to
@@ -105,3 +104,8 @@ fun chooseUser(community: Community) : Person {
 // Steps to achieve
 //      create a class of person to keep user info within it
 //      do formatting in main to start out with
+
+// Comments after creating single user interface:
+//      See if you can clean up any functions, some over laying classes possibly: in progress
+//      Need to have the option to change to another user, accessing using community class, Person class will not need to change
+//      Need to access activities based on date, this will change a great amount of the Person class and interface
