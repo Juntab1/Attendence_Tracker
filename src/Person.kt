@@ -25,26 +25,39 @@ class Person(private val nameFirst : String?, private val nameLast : String?, pr
 
 
     // able to add activity name and comment about that activity
-    fun add_activity(activityName : String, comment : String?) {
-        activity.add(activityName)
-        if (comment != null){
-            comments[activityName] = comment
-        }
-
+    fun add_activity() {
+        print("What is the activity name? ")
+        val actName = readln()
+        activity.add(actName)
+        print("What is your comment for the activity? ")
+        val actComment = readln()
+        comments[actName] = actComment
     }
 
     // remove the activity and comments connected to it
-    fun remove_activity(activityName: String) {
-        activity.remove(activityName)
-        comments.remove(activityName)
+    fun remove_activity() {
+        val actName = find_activity_name()
+        activity.remove(actName)
+        comments.remove(actName)
     }
 
 
     // access the map to get the comment
-    fun read_comment(activityName: String): String? {
-
-        if (comments.containsKey(activityName)) (return comments[activityName]) else (return "does not exist")
+    fun read_comment(): String? {
+        val actName = find_activity_name()
+        return comments[actName]
     }
+
+    fun find_activity_name(): String{
+        print("What is the name of the activity? ")
+        var actName = readln()
+        while (!activity.contains(actName)){
+            print("Wrong name! What is the name of the activity? ")
+            actName = readln()
+        }
+        return actName
+    }
+
 
 
 }

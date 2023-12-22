@@ -35,22 +35,41 @@ fun intro(community: Community){
 
     // add the person to community instance
     community.add(currPerson)
-    println(community.to_string())
+
+    // give user options for what they can do
+    options(community)
+}
+
+fun intro(tempName: Person): String{
+    println("What would you like to do for ${tempName.first_last_name()}?")
+    println("(A) Would you like to add an activity?")
+    println("(B) Would you like to read a comment for an activity?")
+    println("(C) Would you like to remove an activity?")
+    print("Choice: ")
+    val userChoice = readln()
+    return userChoice
 }
 
 fun options(community: Community) {
     // the person we want to access
     val tempName = choose_user(community)
 
-    // put questions into a function for easier reading
-    println("What would you like to do for ${tempName.first_last_name()}?")
-    println("(A) Would you like to add an activity?")
-    println("(B) Would you like to add a comment for an activity?")
-    println("(C) Would you like to remove an activity?")
-    var userChoice = readln()
+    var userChoice = intro(tempName)
 
     while (userChoice != "Q"){
         // choices for user
+        if (userChoice == "A"){
+            tempName.add_activity()
+        }
+        else if (userChoice == "B"){
+            tempName.read_comment()
+        }
+        else if (userChoice == "C"){
+            tempName.remove_activity()
+        }
+
+        // ask user again
+        userChoice = intro(tempName)
     }
 
 
@@ -65,7 +84,7 @@ fun choose_user(community: Community) : Person {
     }
     var nameNumber = 1
     while (nameNumber < 1 || nameNumber > currNames.size){
-        println("Which person would you like to access?")
+        println("Which person would you like to access? ")
         println("1 - ${currNames.size}")
         nameNumber = reader.nextInt()
     }
