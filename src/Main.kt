@@ -1,16 +1,15 @@
 import java.util.Scanner
-import java.util.concurrent.TimeUnit
 
 fun main() {
     // instance of community class
     val community = Community()
 
-    intro(community)
+    initialIntro(community)
 
 }
 
 // create the current user
-fun intro(community: Community){
+fun initialIntro(community: Community){
     println("Welcome to Attendence Tracker! You will be able to " +
             "track information about people like a note book!")
     // maybe add a sleep function here
@@ -37,7 +36,7 @@ fun intro(community: Community){
     community.add(currPerson)
 
     // give user options for what they can do
-    options(community)
+    options(community, currPerson)
 }
 
 fun intro(tempName: Person): String{
@@ -45,18 +44,20 @@ fun intro(tempName: Person): String{
     println("(A) Would you like to add an activity?")
     println("(B) Would you like to read a comment for an activity?")
     println("(C) Would you like to remove an activity?")
+    println("(Q) Quit")
     print("Choice: ")
     val userChoice = readln()
     return userChoice
 }
 
-fun options(community: Community) {
+fun options(community: Community, currPerson: Person) {
     // the person we want to access
-    val tempName = choose_user(community)
+    val tempName = chooseUser(community)
 
-    var userChoice = intro(tempName)
+    var userChoice = intro(tempName).replaceFirstChar { it.uppercaseChar() }
 
     while (userChoice != "Q"){
+        userChoice = userChoice.replaceFirstChar { it.uppercaseChar() }
         // choices for user
         if (userChoice == "A"){
             tempName.add_activity()
@@ -68,6 +69,7 @@ fun options(community: Community) {
             tempName.remove_activity()
         }
 
+        currPerson.display_info()
         // ask user again
         userChoice = intro(tempName)
     }
@@ -76,7 +78,7 @@ fun options(community: Community) {
 }
 
 // choose the person the user would like to add the notes to
-fun choose_user(community: Community) : Person {
+fun chooseUser(community: Community) : Person {
     val reader = Scanner(System.`in`)
     val currNames = community.get()
     if (currNames.size == 1){
