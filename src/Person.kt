@@ -11,16 +11,16 @@ class Person(private val nameFirst : String?, private val nameLast : String?, pr
     private lateinit var comments : MutableMap<String, String>
 
     // maybe at some point can merge this function into another
-    fun introDisplay(): String {
+    public fun introDisplay(): String {
         return "Hello $firstName ${lastInitial}!"
     }
 
-    fun fullNameDisplay() : String {
+    public fun fullNameDisplay() : String {
         return "$nameFirst $nameLast"
     }
 
 
-    fun displayInfo() {
+    public fun displayInfo() {
         // way of returning the usual display for the user
         println("Activities:")
         val iterate = activities.listIterator()
@@ -39,7 +39,7 @@ class Person(private val nameFirst : String?, private val nameLast : String?, pr
 
 
     // able to add activity name and comment about that activity
-    fun addActivity() {
+    public fun addActivity() {
         if (!::activities.isInitialized && !::comments.isInitialized){
             activities = mutableListOf<String>()
             comments = mutableMapOf<String, String>()
@@ -53,7 +53,7 @@ class Person(private val nameFirst : String?, private val nameLast : String?, pr
     }
 
     // remove the activity and comments connected to it
-    fun removeActivity() {
+    public fun removeActivity() {
         if (::activities.isInitialized){
             val actName = findActivityName().lowercase(Locale.getDefault())
             activities.remove(actName)
@@ -67,9 +67,9 @@ class Person(private val nameFirst : String?, private val nameLast : String?, pr
 
 
     // access the map to get the comment
-    fun readComment() {
+    public fun readComment() {
         if (::comments.isInitialized){
-            if (!comments.isEmpty()){
+            if (comments.isNotEmpty()){
                 val actName = findActivityName().lowercase(Locale.getDefault())
                 println("Comment for ${actName}: " + comments[actName])
             }
@@ -82,6 +82,7 @@ class Person(private val nameFirst : String?, private val nameLast : String?, pr
         }
     }
 
+    // more of a helper function of finding the name of the activity
     private fun findActivityName(): String{
         print("What is the name of the activity? ")
         var actName = readln().lowercase(Locale.getDefault())
