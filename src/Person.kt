@@ -26,6 +26,14 @@ class Person(nameFirst : String?, nameLast : String?, personAge : Int, todayDate
         return listOfDates;
     }
 
+    fun setDate(currDate : String) : Boolean {
+        if (dates.contains(currDate)){
+            return false
+        }
+        dates[currDate] = null
+        return true
+    }
+
     // need to return in string version
     fun getDatesString(){
         var currDates = "Dates: "
@@ -35,25 +43,19 @@ class Person(nameFirst : String?, nameLast : String?, personAge : Int, todayDate
         println(currDates.removeRange(currDates.length - 2, currDates.length))
     }
 
+    // Might be returning null not a MutableList
     fun getActivities(date: String): MutableList<String>? {
-        if (!::dates.isInitialized){
-            return mutableListOf()
-        }
         return dates[date]?.activities
     }
 
     // able to add activity name and comment about that activity
-    fun addActivity() {
-        if (!::dates.isInitialized){
-            activities = mutableListOf()
-            comments = mutableMapOf()
-        }
+    fun addActivity(currDate: String) {
         print("What is the activity name? ")
         val actName = readln().lowercase(Locale.getDefault())
-        activities.add(actName)
+        dates[currDate]?.activities?.add(actName)
         print("What is your comment for the activity? ")
         val actComment = readln().lowercase(Locale.getDefault())
-        comments[actName] = actComment
+        dates[currDate]?.comments?.set(actName, actComment)
     }
 
     // remove the activity and comments connected to it
