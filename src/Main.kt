@@ -82,10 +82,10 @@ private fun chooseUser(community: Community) : Person {
     if (currNames.size == 1){
         return currNames[0]
     }
-    var nameNumber = 1
-    while (nameNumber >= 1 && nameNumber < currNames.size){
-        println("Which person would you like to access? ")
-        println("1 - ${currNames.size}")
+    var nameNumber = -1
+    while (nameNumber == -1 || (nameNumber > 1 && nameNumber < currNames.size)){
+        println("Which person would you like to access, enter the user number (1-${currNames.size})? ")
+        community.allNamesDisplay()
         nameNumber = reader.nextInt()
     }
     return currNames[nameNumber - 1]
@@ -146,4 +146,4 @@ private fun options(community: Community) {
 
 // Comments after creating single user interface:
 //      Need to have the option to change to another user, accessing using community class, Person class will not need to change
-//      Need to access activities based on date, this will change a great amount of the Person class and interface
+//      Need to access activities based on date, this will change a great amount of the Person class and interface of console
