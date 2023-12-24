@@ -13,26 +13,7 @@ private fun initialIntro(community: Community){
     println("Welcome to Attendance Tracker! You will be able to " +
             "track information about people like a note book!")
 
-    print("What is your first name? ")
-    val firstName = readln()
-
-    print("What is your last name Initial? ")
-    var lastName = readln()
-
-    while (lastName.length > 1){
-        print("What is your last name Initial? ")
-        lastName = readln()
-    }
-
-    val reader = Scanner(System.`in`)
-    print("What is your age? ")
-    val age = reader.nextInt()
-
-    // create the person instance
-    val currPerson = Person(firstName, lastName, age)
-
-    // add the person to community instance
-    community.add(currPerson)
+    addUser(community)
 
     // give user options for what they can do
     options(community)
@@ -54,8 +35,11 @@ private fun addUser(community : Community) {
     print("What is your age? ")
     val age = reader.nextInt()
 
+    print("What is the current day, format xx/xx/xxxx: ")
+    val todayDate = readln()
+
     // create the person instance
-    val currPerson = Person(firstName, lastName, age)
+    val currPerson = Person(firstName, lastName, age, todayDate)
 
     // add the person to community instance
     community.add(currPerson)
@@ -75,6 +59,14 @@ private fun intro(tempName: Person): String{
     return userChoice
 }
 
+private fun accessDate(person : Person): String{
+    println("Which date would you like to access?");
+    // get list of dates
+    println(person.getDates())
+    val chosenDate = readln()
+    return chosenDate
+}
+
 // choose the person the user would like to add the notes to
 private fun chooseUser(community: Community) : Person {
     val reader = Scanner(System.`in`)
@@ -91,10 +83,25 @@ private fun chooseUser(community: Community) : Person {
     return currNames[nameNumber - 1]
 }
 
+private fun chooseDate(currPerson : Person) : String {
+    val reader = Scanner(System.`in`)
+    val currDates = currPerson.getDates()
+    if (currDates.size == 1){
+        return currDates[0]
+    }
+    var nameNumber = -1
+    while (nameNumber == -1 || (nameNumber > 1 && nameNumber < currDates.size)){
+        println("Which person would you like to access, enter the user number (1-${currDates.size})? ")
+        currPerson.getDatesString()
+        nameNumber = reader.nextInt()
+    }
+    return currDates[nameNumber - 1]
+}
+
 private fun displayInfo(currUser: Person) {
     // way of returning the usual display for the user
     println("Activities:")
-    val iterate = currUser.getActivities().listIterator()
+    val iterate = currUser.getActivities()?.listIterator()
     var numberOfAct = 1
     if (!iterate.hasNext()){
         println("  No activities")
@@ -111,6 +118,8 @@ private fun displayInfo(currUser: Person) {
 private fun options(community: Community) {
     // the person we want to access
     var tempName = chooseUser(community)
+
+    var tempDate =
 
     var userChoice = intro(tempName).replaceFirstChar { it.uppercaseChar() }
 
@@ -145,5 +154,4 @@ private fun options(community: Community) {
 //      do formatting in main to start out with
 
 // Comments after creating single user interface:
-//      Need to have the option to change to another user, accessing using community class, Person class will not need to change
 //      Need to access activities based on date, this will change a great amount of the Person class and interface of console

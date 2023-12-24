@@ -1,31 +1,50 @@
 import java.util.*
 
-class Person(nameFirst : String?, nameLast : String?, personAge : Int) {
+class Person(nameFirst : String?, nameLast : String?, personAge : Int, todayDate : String) {
     // maybe add a getter and setter later since it is all private
     private val firstName: String? = nameFirst
     private val lastInitial: String? = nameLast
     private val age : Int = personAge
-    // late-init under the hood gives the variables a null later to be initialized
-    private lateinit var activities : MutableList<String>
-    // key =  index num. of activity in activity
-    // value = comment
-    private lateinit var comments : MutableMap<String, String>
+    // key is date and value is list of activities
+    private var dates : MutableMap<String, DateInfo?> = mutableMapOf(todayDate to null)
+//    // late-init under the hood gives the variables a null later to be initialized
+//    private lateinit var activities : MutableList<String>
+//    // key =  index num. of activity in activity
+//    // value = comment
+//    private lateinit var comments : MutableMap<String, String>
 
 
     fun fullNameDisplay() : String {
         return "$firstName $lastInitial"
     }
 
-    fun getActivities(): MutableList<String> {
-        if (!::activities.isInitialized){
+    fun getDates() : MutableList<String> {
+        val listOfDates = mutableListOf<String>()
+        dates.keys.forEach{
+            listOfDates.add(it)
+        }
+        return listOfDates;
+    }
+
+    // need to return in string version
+    fun getDatesString(){
+        var currDates = "Dates: "
+        dates.keys.forEach{
+            currDates += "${it}, "
+        }
+        println(currDates.removeRange(currDates.length - 2, currDates.length))
+    }
+
+    fun getActivities(date: String): MutableList<String>? {
+        if (!::dates.isInitialized){
             return mutableListOf()
         }
-        return activities
+        return dates[date]?.activities
     }
 
     // able to add activity name and comment about that activity
     fun addActivity() {
-        if (!::activities.isInitialized && !::comments.isInitialized){
+        if (!::dates.isInitialized){
             activities = mutableListOf()
             comments = mutableMapOf()
         }
