@@ -17,6 +17,9 @@ class Person(nameFirst : String?, nameLast : String?, personAge : Int) {
     }
 
     fun getActivities(): MutableList<String> {
+        if (!::activities.isInitialized){
+            return mutableListOf()
+        }
         return activities
     }
 

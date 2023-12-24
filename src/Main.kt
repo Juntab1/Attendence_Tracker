@@ -38,11 +38,37 @@ private fun initialIntro(community: Community){
     options(community)
 }
 
+private fun addUser(community : Community) {
+    print("What is the first name? ")
+    val firstName = readln()
+
+    print("What is the last name Initial? ")
+    var lastName = readln()
+
+    while (lastName.length > 1){
+        print("What is your last name Initial? ")
+        lastName = readln()
+    }
+
+    val reader = Scanner(System.`in`)
+    print("What is your age? ")
+    val age = reader.nextInt()
+
+    // create the person instance
+    val currPerson = Person(firstName, lastName, age)
+
+    // add the person to community instance
+    community.add(currPerson)
+
+}
+
 private fun intro(tempName: Person): String{
     println("What would you like to do for ${tempName.fullNameDisplay()}?")
     println("(A) Would you like to add an activity?")
     println("(B) Would you like to read a comment for an activity?")
     println("(C) Would you like to remove an activity?")
+    println("(D) Would you like to add a new user?")
+    println("(E) Would you like to change the user?")
     println("(Q) Quit")
     print("Choice: ")
     val userChoice = readln()
@@ -57,7 +83,7 @@ private fun chooseUser(community: Community) : Person {
         return currNames[0]
     }
     var nameNumber = 1
-    while (nameNumber < 1 || nameNumber > currNames.size){
+    while (nameNumber >= 1 && nameNumber < currNames.size){
         println("Which person would you like to access? ")
         println("1 - ${currNames.size}")
         nameNumber = reader.nextInt()
@@ -84,7 +110,7 @@ private fun displayInfo(currUser: Person) {
 
 private fun options(community: Community) {
     // the person we want to access
-    val tempName = chooseUser(community)
+    var tempName = chooseUser(community)
 
     var userChoice = intro(tempName).replaceFirstChar { it.uppercaseChar() }
 
@@ -95,6 +121,8 @@ private fun options(community: Community) {
             "A" -> tempName.addActivity()
             "B" -> tempName.readComment()
             "C" -> tempName.removeActivity()
+            "D" -> addUser(community)
+            "E" -> tempName = chooseUser(community)
         }
 
         displayInfo(tempName)
@@ -117,6 +145,5 @@ private fun options(community: Community) {
 //      do formatting in main to start out with
 
 // Comments after creating single user interface:
-//      clean up the rest of the warning signs in the top right corner of the screen
 //      Need to have the option to change to another user, accessing using community class, Person class will not need to change
 //      Need to access activities based on date, this will change a great amount of the Person class and interface
