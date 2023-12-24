@@ -23,8 +23,8 @@ class Person(nameFirst : String?, nameLast : String?, personAge : Int) {
     // able to add activity name and comment about that activity
     fun addActivity() {
         if (!::activities.isInitialized && !::comments.isInitialized){
-            activities = mutableListOf<String>()
-            comments = mutableMapOf<String, String>()
+            activities = mutableListOf()
+            comments = mutableMapOf()
         }
         print("What is the activity name? ")
         val actName = readln().lowercase(Locale.getDefault())

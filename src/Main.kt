@@ -69,7 +69,7 @@ private fun displayInfo(currUser: Person) {
     // way of returning the usual display for the user
     println("Activities:")
     val iterate = currUser.getActivities().listIterator()
-    var numberOfAct = 1;
+    var numberOfAct = 1
     if (!iterate.hasNext()){
         println("  No activities")
     }
@@ -77,7 +77,7 @@ private fun displayInfo(currUser: Person) {
         while (iterate.hasNext()){
             val currActivity = iterate.next()
             println("  ${numberOfAct}. $currActivity")
-            numberOfAct++;
+            numberOfAct++
         }
     }
 }
@@ -91,19 +91,15 @@ private fun options(community: Community) {
     while (userChoice != "Q"){
         userChoice = userChoice.replaceFirstChar { it.uppercaseChar() }
         // choices for user
-        if (userChoice == "A"){
-            tempName.addActivity()
-        }
-        else if (userChoice == "B"){
-            tempName.readComment()
-        }
-        else if (userChoice == "C"){
-            tempName.removeActivity()
+        when (userChoice){
+            "A" -> tempName.addActivity()
+            "B" -> tempName.readComment()
+            "C" -> tempName.removeActivity()
         }
 
         displayInfo(tempName)
         // ask user again
-        userChoice = intro(tempName)
+        userChoice = intro(tempName).replaceFirstChar { it.uppercaseChar() }
     }
     println("Have a nice day!")
 }
