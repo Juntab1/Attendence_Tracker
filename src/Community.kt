@@ -16,10 +16,10 @@ class Community {
     }
 
     // need to return in string version
-    fun to_string() : String {
+    fun allNamesDisplay() : String {
         var names : String = "Names: "
         nameList.forEach(){
-            names += "${it.first_last_name()},"
+            names += "${it.fullNameDisplay()},"
         }
         names = names.removeRange(names.length - 1, names.length)
         return names

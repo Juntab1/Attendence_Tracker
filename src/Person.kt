@@ -6,7 +6,7 @@ class Person(nameFirst : String?, nameLast : String?, personAge : Int, todayDate
     private val lastInitial: String? = nameLast
     private val age : Int = personAge
     // key is date and value is list of activities
-    private lateinit var dates : MutableMap<String, DateInfo>
+    private var dates : MutableMap<String, DateInfo> = mutableMapOf(todayDate to DateInfo("",""))
 //    // late-init under the hood gives the variables a null later to be initialized
 //    private lateinit var activities : MutableList<String>
 //    // key =  index num. of activity in activity
@@ -26,14 +26,13 @@ class Person(nameFirst : String?, nameLast : String?, personAge : Int, todayDate
         return listOfDates;
     }
 
-    // comment out for now when working on add function and using lateinit
-//    fun setDate(currDate : String) : Boolean {
-////        if (dates.contains(currDate)){
-////            return false
-////        }
-////        dates[currDate] = null
-////        return true
-//    }
+    fun setDate(currDate : String) : Boolean {
+        if (dates.contains(currDate)){
+            return false
+        }
+        dates[currDate] = DateInfo("", "")
+        return true
+    }
 
     // need to return in string version
     fun getDatesString(){
@@ -55,9 +54,6 @@ class Person(nameFirst : String?, nameLast : String?, personAge : Int, todayDate
         val actName = readln().lowercase(Locale.getDefault())
         print("What is your comment for the activity? ")
         val actComment = readln().lowercase(Locale.getDefault())
-        if (!::dates.isInitialized){
-            dates = mutableMapOf<String, DateInfo>((currDate to DateInfo(actName, actComment)))
-        }
         if (dates[currDate]?.activities == null){
             dates[currDate]?.activities = mutableListOf(actName)
         }

@@ -59,7 +59,7 @@ private fun addDate(currPerson : Person) {
 
 
 private fun intro(tempName: Person, tempDate : String): String{
-    println("What would you like to do for ${tempName.fullNameDisplay()},$tempDate?")
+    println("What would you like to do for ${tempName.fullNameDisplay()}, $tempDate?")
     println("(A) Would you like to add an activity?")
     println("(B) Would you like to read a comment for an activity?")
     println("(C) Would you like to remove an activity?")
