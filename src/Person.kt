@@ -6,7 +6,7 @@ class Person(nameFirst : String?, nameLast : String?, personAge : Int, todayDate
     private val lastInitial: String? = nameLast
     private val age : Int = personAge
     // key is date and value is list of activities
-    private var dates : MutableMap<String, DateInfo?> = mutableMapOf(todayDate to null)
+    private lateinit var dates : MutableMap<String, DateInfo>
 //    // late-init under the hood gives the variables a null later to be initialized
 //    private lateinit var activities : MutableList<String>
 //    // key =  index num. of activity in activity
@@ -26,13 +26,14 @@ class Person(nameFirst : String?, nameLast : String?, personAge : Int, todayDate
         return listOfDates;
     }
 
-    fun setDate(currDate : String) : Boolean {
-        if (dates.contains(currDate)){
-            return false
-        }
-        dates[currDate] = null
-        return true
-    }
+    // comment out for now when working on add function and using lateinit
+//    fun setDate(currDate : String) : Boolean {
+////        if (dates.contains(currDate)){
+////            return false
+////        }
+////        dates[currDate] = null
+////        return true
+//    }
 
     // need to return in string version
     fun getDatesString(){
@@ -52,14 +53,17 @@ class Person(nameFirst : String?, nameLast : String?, personAge : Int, todayDate
     fun addActivity(currDate : String) {
         print("What is the activity name? ")
         val actName = readln().lowercase(Locale.getDefault())
+        print("What is your comment for the activity? ")
+        val actComment = readln().lowercase(Locale.getDefault())
+        if (!::dates.isInitialized){
+            dates = mutableMapOf<String, DateInfo>((currDate to DateInfo(actName, actComment)))
+        }
         if (dates[currDate]?.activities == null){
             dates[currDate]?.activities = mutableListOf(actName)
         }
         else{
             dates[currDate]?.activities?.add(actName)
         }
-        print("What is your comment for the activity? ")
-        val actComment = readln().lowercase(Locale.getDefault())
         dates[currDate]?.comments?.set(actName, actComment)
     }
 
