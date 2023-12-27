@@ -44,26 +44,31 @@ class Person(nameFirst : String?, nameLast : String?, personAge : Int, todayDate
     }
 
     // Might be returning null not a MutableList
-    fun getActivities(date: String): MutableList<String>? {
+    fun getActivities(date : String): MutableList<String>? {
         return dates[date]?.activities
     }
 
     // able to add activity name and comment about that activity
-    fun addActivity(currDate: String) {
+    fun addActivity(currDate : String) {
         print("What is the activity name? ")
         val actName = readln().lowercase(Locale.getDefault())
-        dates[currDate]?.activities?.add(actName)
+        if (dates[currDate]?.activities == null){
+            dates[currDate]?.activities = mutableListOf(actName)
+        }
+        else{
+            dates[currDate]?.activities?.add(actName)
+        }
         print("What is your comment for the activity? ")
         val actComment = readln().lowercase(Locale.getDefault())
         dates[currDate]?.comments?.set(actName, actComment)
     }
 
     // remove the activity and comments connected to it
-    fun removeActivity() {
-        if (::activities.isInitialized){
-            val actName = findActivityName().lowercase(Locale.getDefault())
-            activities.remove(actName)
-            comments.remove(actName)
+    fun removeActivity(currDate : String) {
+        if (dates[currDate]?.activities != null){
+            val actName = findActivityName(currDate).lowercase(Locale.getDefault())
+            dates[currDate]?.activities?.remove(actName)
+            dates[currDate]?.comments?.remove(actName)
             println("$actName removed!")
         }
         else{
@@ -73,15 +78,10 @@ class Person(nameFirst : String?, nameLast : String?, personAge : Int, todayDate
 
 
     // access the map to get the comment
-    fun readComment() {
-        if (::comments.isInitialized){
-            if (comments.isNotEmpty()){
-                val actName = findActivityName().lowercase(Locale.getDefault())
-                println("Comment for ${actName}: " + comments[actName])
-            }
-            else{
-                println("No activities available!")
-            }
+    fun readComment(currDate : String) {
+        if (dates[currDate]?.comments?.isNotEmpty() == true){
+            val actName = findActivityName(currDate).lowercase(Locale.getDefault())
+            println("Comment for ${actName}: " + dates[currDate]?.comments?.get(actName))
         }
         else{
             println("No activities available to read comments from!")
@@ -89,10 +89,10 @@ class Person(nameFirst : String?, nameLast : String?, personAge : Int, todayDate
     }
 
     // more of a helper function of finding the name of the activity
-    private fun findActivityName(): String{
+    private fun findActivityName(currDate : String): String{
         print("What is the name of the activity? ")
         var actName = readln().lowercase(Locale.getDefault())
-        while (!activities.contains(actName)){
+        while (!dates[currDate]?.activities?.contains(actName)!!){
             print("Wrong name! What is the name of the activity? ")
             actName = readln().lowercase(Locale.getDefault())
         }

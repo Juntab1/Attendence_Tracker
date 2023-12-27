@@ -58,8 +58,8 @@ private fun addDate(currPerson : Person) {
 }
 
 
-private fun intro(tempName: Person): String{
-    println("What would you like to do for ${tempName.fullNameDisplay()}?")
+private fun intro(tempName: Person, tempDate : String): String{
+    println("What would you like to do for ${tempName.fullNameDisplay()},$tempDate?")
     println("(A) Would you like to add an activity?")
     println("(B) Would you like to read a comment for an activity?")
     println("(C) Would you like to remove an activity?")
@@ -127,15 +127,15 @@ private fun options(community: Community) {
 
     var tempDate = chooseDate(tempName)
 
-    var userChoice = intro(tempName).replaceFirstChar { it.uppercaseChar() }
+    var userChoice = intro(tempName, tempDate).replaceFirstChar { it.uppercaseChar() }
 
     while (userChoice != "Q"){
         userChoice = userChoice.replaceFirstChar { it.uppercaseChar() }
         // choices for user
         when (userChoice){
-            "A" -> tempName.addActivity()
-            "B" -> tempName.readComment()
-            "C" -> tempName.removeActivity()
+            "A" -> tempName.addActivity(tempDate)
+            "B" -> tempName.readComment(tempDate)
+            "C" -> tempName.removeActivity(tempDate)
             "D" -> addDate(tempName)
             "E" -> tempDate = chooseDate(tempName)
             "F" -> addUser(community)
@@ -145,7 +145,7 @@ private fun options(community: Community) {
 
         displayInfo(tempName, tempDate)
         // ask user again
-        userChoice = intro(tempName).replaceFirstChar { it.uppercaseChar() }
+        userChoice = intro(tempName, tempDate).replaceFirstChar { it.uppercaseChar() }
     }
     println("Have a nice day!")
 }
