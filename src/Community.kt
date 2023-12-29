@@ -19,9 +19,9 @@ class Community {
     fun allNamesDisplay() : String {
         var names : String = "Names: "
         nameList.forEach(){
-            names += "${it.fullNameDisplay()},"
+            names += "${it.fullNameDisplay()}, "
         }
-        names = names.removeRange(names.length - 1, names.length)
+        names = names.removeRange(names.length - 2, names.length)
         return names
     }
 }
