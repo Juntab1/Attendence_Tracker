@@ -1,3 +1,4 @@
+import java.util.Objects
 import java.util.Scanner
 
 fun main() {
@@ -59,7 +60,7 @@ private fun addDate(currPerson : Person) {
 
 
 private fun intro(tempName: Person, tempDate : String): String{
-    println("What would you like to do for ${tempName.fullNameDisplay()}, $tempDate?")
+    println("What would you like to do?")
     println("(A) Would you like to add an activity?")
     println("(B) Would you like to read a comment for an activity?")
     println("(C) Would you like to remove an activity?")
@@ -83,49 +84,62 @@ private fun chooseUser(community: Community) : Person {
     var nameNumber = -1
     while (nameNumber == -1 || (nameNumber > 1 && nameNumber < currNames.size)){
         println("Which person would you like to access, enter the user number (1-${currNames.size})? ")
-        community.allNamesDisplay()
+        println(community.allNamesDisplay())
         nameNumber = reader.nextInt()
     }
     return currNames[nameNumber - 1]
 }
 
-private fun chooseDate(currPerson : Person) : String {
-    val reader = Scanner(System.`in`)
+private fun displayDate(currPerson : Person) : String {
     val currDates = currPerson.getDates()
-    if (currDates.size == 1){
-        return currDates[0]
-    }
-    var nameNumber = -1
-    while (nameNumber == -1 || (nameNumber > 1 && nameNumber < currDates.size)){
-        println("Which date would you like to access, enter the user number (1-${currDates.size})? ")
-        currPerson.getDatesString()
-        nameNumber = reader.nextInt()
-    }
-    return currDates[nameNumber - 1]
+    return choiceInfo("date", currDates, null, currPerson.getDatesString()).toString()
 }
 
-private fun displayInfo(currUser: Person, currDate: String) {
-    // way of returning the usual display for the user
-    println("Activities:")
-    val iterate = currUser.getActivities(currDate)?.listIterator()
-    var numberOfAct = 1
-    if (iterate == null){
-        println("  No activities")
-    }
-    else{
-        while (iterate.hasNext()){
-            val currActivity = iterate.next()
-            println("  ${numberOfAct}. $currActivity")
-            numberOfAct++
+// helper method
+private fun choiceInfo(info : String, infoHolderDates : MutableList<String>?,infoHolderUsers : MutableList<Person>?, choices : String) : Any? {
+    val currInfoType = infoHolderDates ?: infoHolderUsers
+    val reader = Scanner(System.`in`)
+    if (currInfoType != null) {
+        if (currInfoType.size == 1){
+            return currInfoType[0]
         }
     }
+    var objectNumber = -1
+    if (currInfoType != null) {
+        while (objectNumber == -1 || (objectNumber > 1 && objectNumber < currInfoType.size)){
+            println("Which $info would you like to access, enter the number (1-${currInfoType.size})? ")
+            println(choices)
+            objectNumber = reader.nextInt()
+        }
+    }
+    return currInfoType?.get(objectNumber - 1)
+}
+
+private fun displayInfo(currUser: Person, currDate: String, community: Community) {
+    // way of returning the usual display for the user
+    println("Activities for ${currUser.fullNameDisplay()}, ${currDate}:")
+    val iterate = currUser.getActivities(currDate)?.listIterator()
+    var numberOfAct = 1
+    if (iterate != null) {
+        if (!iterate.hasNext()){
+            println("  No activities")
+        } else{
+            while (iterate.hasNext()){
+                val currActivity = iterate.next()
+                println("  ${numberOfAct}. $currActivity")
+                numberOfAct++
+            }
+        }
+    }
+    println(currUser.getDatesString())
+    println(community.allNamesDisplay())
 }
 
 private fun options(community: Community) {
     // the person we want to access
     var tempName = chooseUser(community)
 
-    var tempDate = chooseDate(tempName)
+    var tempDate = displayDate(tempName)
 
     var userChoice = intro(tempName, tempDate).replaceFirstChar { it.uppercaseChar() }
 
@@ -137,13 +151,13 @@ private fun options(community: Community) {
             "B" -> tempName.readComment(tempDate)
             "C" -> tempName.removeActivity(tempDate)
             "D" -> addDate(tempName)
-            "E" -> tempDate = chooseDate(tempName)
+            "E" -> tempDate = displayDate(tempName)
             "F" -> addUser(community)
             "G" -> tempName = chooseUser(community)
 
         }
 
-        displayInfo(tempName, tempDate)
+        displayInfo(tempName, tempDate, community)
         // ask user again
         userChoice = intro(tempName, tempDate).replaceFirstChar { it.uppercaseChar() }
     }
@@ -165,3 +179,4 @@ private fun options(community: Community) {
 // Comments after creating single user interface:
 //      Need to access activities based on date, this will change a great amount of the Person class and interface of console
 //      think about user and implementor setter and getter and which should be for user and not, it looks mixed up currently
+//      put spaces between lines of code for clear reading
