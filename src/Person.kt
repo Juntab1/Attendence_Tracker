@@ -1,49 +1,56 @@
 import java.util.*
 
-class Person(nameFirst : String?, nameLast : String?, personAge : Int, todayDate : String) {
-    // maybe add a getter and setter later since it is all private
+class Person(nameFirst : String?, nameLast : String?, todayDate : String) {
+
+    // first name of the user
     private val firstName: String? = nameFirst
+
+    // last initial of the user
     private val lastInitial: String? = nameLast
-    private val age : Int = personAge
+
+
     // key is date and value is list of activities
     private var dates : MutableMap<String, DateInfo> = mutableMapOf(todayDate to DateInfo("",""))
-//    // late-init under the hood gives the variables a null later to be initialized
-//    private lateinit var activities : MutableList<String>
-//    // key =  index num. of activity in activity
-//    // value = comment
-//    private lateinit var comments : MutableMap<String, String>
 
-
+    // display the person's full name
     fun fullNameDisplay() : String {
         return "$firstName $lastInitial"
     }
 
+    // return list of all dates for the person
     fun getDates() : MutableList<String> {
         val listOfDates = mutableListOf<String>()
+
         dates.keys.forEach{
             listOfDates.add(it)
         }
+
         return listOfDates;
     }
 
+    // add to the map variable the new date
     fun setDate(currDate : String) : Boolean {
         if (dates.contains(currDate)){
             return false
         }
+
         dates[currDate] = DateInfo("", "")
+
         return true
     }
 
-    // need to return in string version
-    fun getDatesString(){
+    // need to return dates in string version
+    fun getDatesString(): String{
         var currDates = "Dates: "
+
         dates.keys.forEach{
             currDates += "${it}, "
         }
-        println(currDates.removeRange(currDates.length - 2, currDates.length))
+
+        return currDates.removeRange(currDates.length - 2, currDates.length)
     }
 
-    // Might be returning null not a MutableList
+    // returning a list of all the activities of the current date
     fun getActivities(date : String): MutableList<String>? {
         return dates[date]?.activities
     }
@@ -52,14 +59,17 @@ class Person(nameFirst : String?, nameLast : String?, personAge : Int, todayDate
     fun addActivity(currDate : String) {
         print("What is the activity name? ")
         val actName = readln().lowercase(Locale.getDefault())
+
         print("What is your comment for the activity? ")
         val actComment = readln().lowercase(Locale.getDefault())
+
         if (dates[currDate]?.activities == null){
             dates[currDate]?.activities = mutableListOf(actName)
         }
         else{
             dates[currDate]?.activities?.add(actName)
         }
+
         dates[currDate]?.comments?.set(actName, actComment)
     }
 
@@ -76,7 +86,6 @@ class Person(nameFirst : String?, nameLast : String?, personAge : Int, todayDate
         }
     }
 
-
     // access the map to get the comment
     fun readComment(currDate : String) {
         if (dates[currDate]?.comments?.isNotEmpty() == true){
@@ -88,14 +97,17 @@ class Person(nameFirst : String?, nameLast : String?, personAge : Int, todayDate
         }
     }
 
-    // more of a helper function of finding the name of the activity
+    // helper method of finding the name of the activity
     private fun findActivityName(currDate : String): String{
         print("What is the name of the activity? ")
+
         var actName = readln().lowercase(Locale.getDefault())
+
         while (!dates[currDate]?.activities?.contains(actName)!!){
             print("Wrong name! What is the name of the activity? ")
             actName = readln().lowercase(Locale.getDefault())
         }
+
         return actName
     }
 

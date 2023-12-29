@@ -1,7 +1,6 @@
-// new variable to keep track of the info needed for each day entry by user, activities and comments that correspond
+// new variable class to keep track of the info needed for each day entry by user, activities and comments that correspond
 class DateInfo(activity : String, comment : String) {
 
-    // maybe later change the field variables to a lateinit to save space, but currently not a big deal
 
     // contain list of activities
     var activities : MutableList<String> = if (activity == ""){

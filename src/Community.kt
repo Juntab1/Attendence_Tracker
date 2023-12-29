@@ -1,4 +1,6 @@
+// class keeping track of all the people created within the application by the user
 class Community {
+    // mutable list that contains all the Person instances
     private lateinit var nameList : MutableList<Person>
 
     // set called "add"
@@ -15,13 +17,16 @@ class Community {
         return nameList
     }
 
-    // need to return in string version
+    // return all names in string version
     fun allNamesDisplay() : String {
         var names : String = "Names: "
+
         nameList.forEach(){
             names += "${it.fullNameDisplay()}, "
         }
+
         names = names.removeRange(names.length - 2, names.length)
+
         return names
     }
 }
