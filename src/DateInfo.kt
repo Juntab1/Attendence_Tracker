@@ -4,24 +4,17 @@ class DateInfo(activity : String, comment : String) {
     // maybe later change the field variables to a lateinit to save space, but currently not a big deal
 
     // contain list of activities
-    lateinit var activities : MutableList<String>
-    // contain comments that correspond with the activities
-    lateinit var comments : MutableMap<String, String>
-
-    init{
-        if (activity == ""){
-            activities = mutableListOf()
-        }
-        else{
-            activities = mutableListOf(activity)
-        }
-        if (comment == ""){
-            comments = mutableMapOf()
-        }
-        else{
-            comments = mutableMapOf(activity to comment)
-        }
+    var activities : MutableList<String> = if (activity == ""){
+        mutableListOf()
+    } else{
+        mutableListOf(activity)
     }
 
+    // contain comments that correspond with the activities
+    var comments : MutableMap<String, String> = if (comment == ""){
+        mutableMapOf()
+    } else{
+        mutableMapOf(activity to comment)
+    }
 
 }
